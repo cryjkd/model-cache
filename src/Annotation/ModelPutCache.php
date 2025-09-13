@@ -19,13 +19,9 @@ use Hyperf\Di\Annotation\AbstractAnnotation;
 #[Attribute(Attribute::TARGET_METHOD)]
 class ModelPutCache extends AbstractAnnotation
 {
-    /**
-     * @var string
-     */
-    public $prefix;
-
-    /**
-     * @var string
-     */
-    public $value;
+    public function __construct(
+        public ?string $prefix = null,
+        public ?string $value = null
+    ) {
+    }
 }
