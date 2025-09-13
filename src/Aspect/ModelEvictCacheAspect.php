@@ -19,6 +19,7 @@ use Hyperf\Di\Aop\ProceedingJoinPoint;
 /**
  * @Aspect
  */
+#[Aspect]
 class ModelEvictCacheAspect extends AbstractAspect
 {
     public array $classes = [];

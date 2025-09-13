@@ -14,7 +14,8 @@ use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Di\Annotation\AbstractAnnotation;
 use Hyperf\Di\Annotation\AnnotationCollector;
 use Hyperf\Redis\RedisFactory;
-use Hyperf\Utils\Str;
+use function Hyperf\Collection\data_get;
+use Hyperf\Stringable\Str;
 
 class ModelCacheService
 {
