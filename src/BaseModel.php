@@ -25,14 +25,14 @@ class BaseModel extends Model
      *
      * @var string
      */
-    public $pkColumn = 'id';
+    public string $pkColumn = 'id';
 
     /**
      * 主键-第二级.
      *
      * @var string
      */
-    public $subPkColumn = '';
+    public string $subPkColumn = '';
 
     /**
      * 关闭自动维护时间字段.
@@ -46,21 +46,21 @@ class BaseModel extends Model
      *
      * @var bool
      */
-    protected $isList = false;
+    protected bool $isList = false;
 
     /**
      * 过期时间.
      *
      * @var int
      */
-    protected $ttl = 129600;
+    protected int $ttl = 129600;
 
     /**
      * 是否开启上下文缓存.
      *
      * @var bool
      */
-    protected $useContext = true;
+    protected bool $useContext = true;
 
     public function getIsList(): bool
     {
@@ -235,23 +235,14 @@ class BaseModel extends Model
 
     /* DB */
 
-    /**
-     * @ModelCache(prefix="Vo", value="#{table}:#{primary}")
-     * @param mixed $primary
-     */
+    #[ModelCache(prefix:'Vo', value:'#{table}:#{primary}')]
     private function getVoCache(string $table, $primary, int $ttl = -1, bool $useContext = true, bool $isList = false): array
     {
         $res = $this->where($this->primaryKey, $primary)->first();
         return $res ? $res->toArray() : [];
     }
 
-    /**
-     * @ModelCache(prefix="VoList", value="#{table}:#{primary}:#{subKey}")
-     * @param mixed $primary
-     * @param mixed $pkColumn
-     * @param mixed $subPkColumn
-     * @param mixed $subKey
-     */
+    #[ModelCache(prefix:'VoList', value:'#{table}:#{primary}:#{subKey}')]
     private function getVoListCache(string $table, $primary, $pkColumn = '', $subPkColumn = '', int $ttl = 0, $subKey = '', bool $isList = true): array
     {
         $model = $this->where($this->primaryKey, $primary);
@@ -262,12 +253,7 @@ class BaseModel extends Model
         return $res ? $res->toArray() : [];
     }
 
-    /**
-     * @ModelPutCache(prefix="Vo", value="#{table}:#{primary}")
-     * @param mixed $table
-     * @param mixed $primary
-     * @param mixed $increment
-     */
+    #[ModelPutCache(prefix:'Vo', value:'#{table}:#{primary}')]
     private function setVoCache($table, $primary, array $data, int $ttl = 0, array $fillable = [], $increment = [], bool $isList = false)
     {
         $model = $this->where($this->primaryKey, $primary);
@@ -286,15 +272,7 @@ class BaseModel extends Model
         return $res ?? null;
     }
 
-    /**
-     * @ModelPutCache(prefix="VoList", value="#{table}:#{primary}:#{subKey}")
-     * @param mixed $table
-     * @param mixed $primary
-     * @param mixed $pkColumn
-     * @param mixed $subPkColumn
-     * @param mixed $increment
-     * @param mixed $subKey
-     */
+    #[ModelPutCache(prefix:'VoList', value:'#{table}:#{primary}:#{subKey}')]
     private function setVoListCache($table, $primary, array $data, int $ttl = 0, $pkColumn = '', $subPkColumn = '', array $fillable = [], $increment = [], $subKey = '', bool $isList = true)
     {
         if (isset($data[$pkColumn]) && $data[$pkColumn]) {
@@ -320,47 +298,25 @@ class BaseModel extends Model
         return $res ?? null;
     }
 
-    /**
-     * @ModelPutCache(prefix="Vo", value="#{table}:#{primary}")
-     * @param mixed $table
-     * @param mixed $primary
-     */
+    #[ModelPutCache(prefix:'Vo', value:'#{table}:#{primary}')]
     private function addVoCache($table, $primary, array $data, int $ttl = 0, array $fillable = [], bool $isList = false): bool
     {
         return $this->insert($data);
     }
 
-    /**
-     * @ModelPutCache(prefix="VoList", value="#{table}:#{primary}:#{subKey}")
-     * @param mixed $table
-     * @param mixed $primary
-     * @param mixed $pkColumn
-     * @param mixed $subPkColumn
-     * @param mixed $subKey
-     */
+    #[ModelPutCache(prefix:'VoList', value:'#{table}:#{primary}:#{subKey}')]
     private function addVoListCache($table, $primary, array $data, int $ttl = 0, $pkColumn = '', $subPkColumn = '', array $fillable = [], $subKey = '', bool $isList = true): bool
     {
         return $this->insert($data);
     }
 
-    /**
-     * @ModelEvictCache(prefix="Vo", value="#{table}:#{primary}")
-     * @param mixed $table
-     * @param mixed $primary
-     */
+    #[ModelEvictCache(prefix:'Vo', value:'#{table}:#{primary}')]
     private function delVoCache($table, $primary, int $ttl = 0, bool $isList = false)
     {
         return $this->where($this->primaryKey, $primary)->delete();
     }
 
-    /**
-     * @ModelEvictCache(prefix="VoList", value="#{table}:#{primary}:#{subKey}")
-     * @param mixed $table
-     * @param mixed $primary
-     * @param mixed $pkColumnValue
-     * @param mixed $subPkColumnValue
-     * @param mixed $subKey
-     */
+    #[ModelEvictCache(prefix:'VoList', value:'#{table}:#{primary}:#{subKey}')]
     private function delVoListCache($table, $primary, $pkColumnValue, $subPkColumnValue = '', $subKey = '', int $ttl = 0, bool $isList = true)
     {
         $model = $this->where($this->primaryKey, $primary);

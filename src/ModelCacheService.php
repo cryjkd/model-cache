@@ -18,9 +18,9 @@ use Hyperf\Utils\Str;
 
 class ModelCacheService
 {
-    public const NIL_VALUE = 'NIL_VALUE';
+    public const string NIL_VALUE = 'NIL_VALUE';
 
-    public const NIL_KEY = 'NIL_KEY';
+    public const string NIL_KEY = 'NIL_KEY';
 
     /**
      * @var StdoutLoggerInterface
@@ -62,7 +62,7 @@ class ModelCacheService
         return $res;
     }
 
-    public function updateCache($key, $value, $subKey, $isList, $group, $ttl, $useContext = true)
+    public function updateCache($key, $value, $subKey, $isList, $group, $ttl, $useContext = true): void
     {
         $this->updateRedisData($key, $value, $subKey, $isList, $group, $ttl);
         if ($useContext) {
@@ -70,7 +70,7 @@ class ModelCacheService
         }
     }
 
-    public function setCache($key, $value, $increment, $subKey, $isList, $ttl, $fillable, $group, $useContext = true)
+    public function setCache($key, $value, $increment, $subKey, $isList, $ttl, $fillable, $group, $useContext = true): void
     {
         $redis = $this->redis->get($group);
         if ($redis->ttl($key) >= 50) { // 防止数据更新时过期导致数据丢失
@@ -278,13 +278,11 @@ class ModelCacheService
      */
     private function setContext($key, $value)
     {
-        //        var_dump('setContext', $key, $value);
         Context::set($key, $value);
     }
 
     /**
      * 删除上下文.
-     * @param mixed $key
      */
     private function delContext($key)
     {
