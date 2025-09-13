@@ -39,7 +39,7 @@ class BaseModel extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    public bool $timestamps = false;
 
     /**
      * 是否为列表.

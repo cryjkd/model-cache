@@ -21,9 +21,9 @@ use Hyperf\Di\Aop\ProceedingJoinPoint;
  */
 class ModelCacheAspect extends AbstractAspect
 {
-    public $classes = [];
+    public array $classes = [];
 
-    public $annotations = [
+    public array $annotations = [
         ModelCache::class,
     ];
 
