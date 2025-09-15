@@ -98,7 +98,6 @@ class BaseModel extends Model
             } else {
                 $res = $this->getVoListCache($this->table, $primary, $this->pkColumn, $this->subPkColumn, $this->ttl);
             }
-            $keys = null;
         } else {
             $res = $this->getVoCache($this->table, $primary, $this->ttl, $this->useContext);
         }
