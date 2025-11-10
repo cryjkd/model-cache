@@ -95,6 +95,7 @@ class BaseModel extends Model
                 } else {
                     $res = $this->getVoListCache($this->table, $primary, $this->pkColumn, $this->subPkColumn, $this->ttl, $keys);
                 }
+                $keys = null;
             } else {
                 $res = $this->getVoListCache($this->table, $primary, $this->pkColumn, $this->subPkColumn, $this->ttl);
             }
@@ -130,7 +131,7 @@ class BaseModel extends Model
             $subKey = '';
             if ($this->subPkColumn) {
                 $subKey = $data[$this->pkColumn] ?? '';
-                $subKey = $subKey ?? $data[array_key_first($data)][$this->pkColumn] ?? '';
+                $subKey = $subKey ?: ($data[array_key_first($data)][$this->pkColumn] ?? '');
             }
             return $this->setVoListCache($this->table, $primary, $data, $this->ttl, $this->pkColumn, $this->subPkColumn, $this->fillable, $increment, $subKey);
         }
@@ -149,7 +150,7 @@ class BaseModel extends Model
             $subKey = '';
             if ($this->subPkColumn) {
                 $subKey = $data[$this->pkColumn] ?? '';
-                $subKey = $subKey ?? $data[array_key_first($data)][$this->pkColumn] ?? '';
+                $subKey = $subKey ?: ($data[array_key_first($data)][$this->pkColumn] ?? '');
             }
             return $this->addVoListCache($this->table, $primary, $data, $this->ttl, $this->pkColumn, $this->subPkColumn, $this->fillable, $subKey);
         }
